@@ -4,25 +4,98 @@
     <meta charset="UTF-8">
     <title>Pomodoro</title>
 
-    <!-- Bootsrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-    <!-- LESS основний файл -->
-    <link rel="stylesheet/less" type="text/css" href="main.less" />
-    <!-- LESS JavaScript компілятор -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+    <link rel="stylesheet" href="main.css"/>
 
+    <style>
+        body {
+            min-width: 350px;
+        }
+
+        #display, #settings {
+            margin-top: 4px;
+        }
+
+        #modify {
+            margin-bottom: 4px;
+        }
+    </style>
 
 </head>
 <body>
 
-<!-- jQuery JavaScript -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"> </script>
 
-<!--Bootsrap JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<div class="main-box">
+    <div class="header">
+        <div class="logo"><a href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank"><img
+                src="pomodoro.png"></a></div>
 
-<!--Own JavaScript -->
-<!--<script type="text/javascript"  src="main.js"> </script>-->
+    </div>
+    <div class="main">
+        <div class="timer" style="display: block">
+            <div class="timer-block">
+                <div class="progress">
+                    <div id="progress-bar" style="width: 100%;">25:00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons" style="display: block">
+            <button id="stop" class=" btn btn-danger" style="display: none">Stop</button>
+            <button id="start" class=" btn btn-success" style="display: inline" >Start</button>
+            <button id="pause" class=" btn btn-warning" style="display: none">Pause</button>
+            <button id="resume" class=" btn btn-success" style="display: none" >Resume</button>
+        </div>
+        <div class="intervals">
+            <div class="work">
+                <span class="work-text">Work:</span>
+                <div id="work-time-interval" style="display: inline">1</div>
+                <span class="minutes-text">min</span>
+            </div>
+            <div class="break">
+                <span class="break-text">Work:</span>
+                <div id="break-time-interval" style="display: inline">0.5</div>
+                <span class="minutes-break">min</span>
+            </div>
+            <div class="longBreak">
+                <span class="longBreak-text">Long break after 4th pomodoro:</span>
+                <div id="longBreak-time-interval" style="display: inline">1</div>
+                <span class="minutes-longBreak">min</span>
+            </div>
+        </div>
+        <button id="settings" class= btn">Settings</button>
+
+        <button id="close-settings" class= btn" style="display: none">Settings</button>
+        <div id="settings-change" style="display: none">
+            <div class="settings-box">
+                <span class="work-text" style="display: inline">Work:</span>
+                <div id="work-time" style="display: inline">25</div>
+                <span class="minutes-text" style="display: inline">min</span>
+            </div>
+            <input type="range" id="change-work-minutes" class="range" value="25" min="1" max="60">
+
+            <div class="settings-box">
+                <span class="break-text">Break:</span>
+                <div id="break-time" style="display: inline">5</div>
+                <span class="minutes-break">min</span>
+            </div>
+            <input type="range" id="change-break-minutes" class=" range" value="5" min="0.5" max="30">
+            <div class="settings-box">
+                <span class="longBreak-text">Long break after 4th pomodoro:</span>
+                <div id="longBreak-time" style="display: inline">20</div>
+                <span class="minutes-longBreak">min</span>
+            </div>
+            <input type="range" id="change-longBreak-minutes" class=" range" value="20" min="0.5" max="30">
+
+        </div>
+    </div>
+    <div class="footer">
+        <p>made by Ilariya Levchenko</p>
+    </div>
+</div>
+
+
+<script type="text/javascript"  src="main.js"> </script>
+<script type="text/javascript"  src="background.js"> </script>
 </body>
 </html>

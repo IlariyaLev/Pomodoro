@@ -1,0 +1,177 @@
+body{
+font-size: 16px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+    line-height: 2;
+
+}
+
+
+.header{
+    background: #ffbca8;
+    z-index: 10;
+    top: 0;
+    position: fixed;
+    right: 0;
+    left: 0;
+
+    height: 55px;
+}
+
+.logo{
+
+
+}
+
+
+img{
+    margin: 3px;
+    margin-top: 0;
+    height: 60px;
+    width: 60px;
+}
+
+
+
+.footer{
+    background: #ffbca8;
+    z-index: 10;
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    left: 0;
+
+    color: beige;
+    text-align: center;
+    height: 50px;
+    font-size: 12px;
+}
+
+.main{
+    margin-top: 70px;
+    margin-bottom: 60px;
+
+}
+
+.timer-block{
+    width: 100%;
+    min-height: 30px;
+    box-sizing: border-box;
+}
+
+.progress{
+    height: 20px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    background: #f7f7f7;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+}
+
+#progress-bar{
+    background: #ff9882;
+    font-size: 12px;
+    color: #fff;
+    text-align: center;
+    box-sizing: border-box;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+
+}
+
+.btn{
+    position: relative;
+    top: -1px;
+
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn-warning{
+    color: #fff;
+    background-color: #fdd644;
+    border-color: #d4ba2f;
+}
+
+
+.intervals{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.work .break .longBreak{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.range{
+    width:100%;
+}
+
+.save-settings{
+    margin-bottom: 20px;
+    color: #fff;
+    background-color: #4daffd;
+    border-color: #2e4cd4;
+}
+
+#settings{
+    color: #fff;
+    background-color: #c6ecfd;
+    border-color: #9ccee2;
+}
+#close-settings{
+    color: #fff;
+    background-color: #c6ecfd;
+    border-color: #9ccee2;
+}
+
+.settings{
+    color: #fff;
+    background-color: #edd3fd;
+    border-color: #bbb6e2;
+
+}
+
+.work-text {
+    font-weight: bold;
+
+}
+
+.break-text{
+    font-weight: bold;
+}
+
+.longBreak-text{
+    font-weight: bold;
+}
+
+#settings-change{
+    margin-bottom: 30px;
+    margin-top: 15px;
+    border-top: solid #ffbca8 2px;
+}
+
+.settings-box{
+    margin-top: 5px;
+}
+

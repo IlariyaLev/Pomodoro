@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Pomodoro",
+  "description": "Pomodoro timer",
+  "version": "1.0",
+  "author": "Ilariya levchenko",
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "browser_action": {
+    "default_icon": "pomodoro.png",
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "activeTab"
+  ]
+}
