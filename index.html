@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="main.css"/>
 
+
     <style>
         body {
             min-width: 350px;
@@ -32,6 +33,7 @@
 
     </div>
     <div class="main">
+        <div id="whatTime">Work time</div>
         <div class="timer" style="display: block">
             <div class="timer-block">
                 <div class="progress">
@@ -45,6 +47,7 @@
             <button id="start" class=" btn btn-success" style="display: inline" >Start</button>
             <button id="pause" class=" btn btn-warning" style="display: none">Pause</button>
             <button id="resume" class=" btn btn-success" style="display: none" >Resume</button>
+            <button id="restart" class=" btn btn-success" style="display: inline" >Restart</button>
         </div>
         <div class="intervals">
             <div class="work">
@@ -53,8 +56,8 @@
                 <span class="minutes-text">min</span>
             </div>
             <div class="break">
-                <span class="break-text">Work:</span>
-                <div id="break-time-interval" style="display: inline">0.5</div>
+                <span class="break-text">Break:</span>
+                <div id="break-time-interval" style="display: inline">1</div>
                 <span class="minutes-break">min</span>
             </div>
             <div class="longBreak">
@@ -72,20 +75,20 @@
                 <div id="work-time" style="display: inline">25</div>
                 <span class="minutes-text" style="display: inline">min</span>
             </div>
-            <input type="range" id="change-work-minutes" class="range" value="25" min="1" max="60">
+            <input type="range" id="change-work-minutes" class="range" value="1" min="1" max="60">
 
             <div class="settings-box">
                 <span class="break-text">Break:</span>
                 <div id="break-time" style="display: inline">5</div>
                 <span class="minutes-break">min</span>
             </div>
-            <input type="range" id="change-break-minutes" class=" range" value="5" min="0.5" max="30">
+            <input type="range" id="change-break-minutes" class=" range" value="1" min="1" max="30">
             <div class="settings-box">
                 <span class="longBreak-text">Long break after 4th pomodoro:</span>
                 <div id="longBreak-time" style="display: inline">20</div>
                 <span class="minutes-longBreak">min</span>
             </div>
-            <input type="range" id="change-longBreak-minutes" class=" range" value="20" min="0.5" max="30">
+            <input type="range" id="change-longBreak-minutes" class=" range" value="1" min="1" max="30">
 
         </div>
     </div>

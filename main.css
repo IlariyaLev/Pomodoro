@@ -18,9 +18,9 @@ font-size: 16px;
     height: 55px;
 }
 
-.logo{
-
-
+#whatTime{
+    font-size: 18px;
+    font-weight: bold;
 }
 
 
@@ -51,6 +51,19 @@ img{
     margin-top: 70px;
     margin-bottom: 60px;
 
+
+}
+@media only screen and (min-width: 600px) {
+    .main {
+
+        border: #ff9882 dashed 2px;
+        padding: 3px;
+        text-align: center;
+        margin-right: 30%;
+        margin-left: 30%;
+
+
+    }
 }
 
 .timer-block{
@@ -138,8 +151,18 @@ img{
     color: #fff;
     background-color: #c6ecfd;
     border-color: #9ccee2;
+    text-align: center;
+    margin: auto;
 }
 #close-settings{
+    color: #fff;
+    background-color: #c6ecfd;
+    border-color: #9ccee2;
+    text-align: center;
+    margin: auto;
+}
+
+#resume{
     color: #fff;
     background-color: #c6ecfd;
     border-color: #9ccee2;

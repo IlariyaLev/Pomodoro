@@ -3,6 +3,8 @@ var refreshDisplayTimeout;
 
 var countDownDate;
 var distance;
+var audio3 = new Audio('bell3.mp3');
+var audio2 = new Audio('bell2.mp3');
 
 var c = 0;
 var myTimer;// how much time it was paused
@@ -12,17 +14,19 @@ var isWork = true;
 var isLongBreak = false;
 
 
-var work = 1;
-var breakTime = 0.5;
-var longBreak = 1;
+var work = 20;
+var breakTime = 15;
+var longBreak = 10;
 var time = work;
 
 document.addEventListener('DOMContentLoaded', function () {
+
     load();
     document.querySelector('#start').addEventListener('click', setTimer);
     document.querySelector('#stop').addEventListener('click', stop);
     document.querySelector('#pause').addEventListener('click', pause);
     document.querySelector('#resume').addEventListener('click', resume);
+    document.querySelector('#restart').addEventListener('click', restart);
     document.querySelector('#settings').addEventListener('click', settings);
 
     document.querySelector('#close-settings').addEventListener('click', csettings);
@@ -42,12 +46,118 @@ function hide(section) {
 }
 
 function load() {
+    showInline("start");
     hide("settings-change");
     hide("stop");
     hide("resume");
-    hide ("settings-change");
+    hide("settings-change");
     hide("pause");
+    if (localStorage.length = 0) {
+        hide("restart");
+        document.getElementById("progress-bar").style.background = "#ff9882";
+        time = work;
+        countWork = 0;
+        isWork = true;
+        document.getElementById("whatTime").innerHTML = "Work time";
+        isLongBreak = false;
+        document.getElementById("progress-bar").innerHTML = work + ":00";
+    } else {
+        showInline("restart");
+
+
+
+
+    if (localStorage.getItem("state") != null) {
+        isWork = localStorage.getItem("state");
+        if (isWork==true) {
+            document.getElementById("progress-bar").style.background = "#ff9882";
+            document.getElementById("whatTime").innerHTML = "Work time";
+        }else{
+            if (isLongBreak==true) {
+                document.getElementById("whatTime").innerHTML = "It's time for longer break";
+                document.getElementById("progress-bar").style.background = "#bbb6e2";
+            } else {
+                document.getElementById("progress-bar").style.background = "#62c462";
+                document.getElementById("whatTime").innerHTML = "Break time";
+
+            }
+        }
+    }
+    if (localStorage.getItem("countWork") != null) {
+        countWork = localStorage.getItem("countWork");
+    }
+    if (localStorage.getItem("stateBreak") != null) {
+        isLongBreak = localStorage.getItem("stateBreak");
+        if (isWork!=true) {
+            if (isLongBreak==true) {
+                document.getElementById("whatTime").innerHTML = "It's time for longer break";
+                document.getElementById("progress-bar").style.background = "#bbb6e2";
+            } else {
+                document.getElementById("progress-bar").style.background = "#62c462";
+                document.getElementById("whatTime").innerHTML = "Break time";
+
+            }
+        }
+    }
+    if (localStorage.getItem("longBreak") != null) {
+        document.getElementById("change-longBreak-minutes").value = localStorage.getItem("longBreak").valueOf();
+        document.getElementById("longBreak-time").innerHTML = localStorage.getItem("longBreak").valueOf();
+        document.getElementById("longBreak-time-interval").innerHTML = localStorage.getItem("longBreak");
+        longBreak = localStorage.getItem("longBreak");
+        if (isLongBreak) {
+            document.getElementById("progress-bar").innerHTML = longBreak + ":00";
+        }
+    }
+    if (localStorage.getItem("breakTime") != null) {
+        document.getElementById("change-break-minutes").value = localStorage.getItem("breakTime").valueOf();
+        document.getElementById("break-time").innerHTML = localStorage.getItem("breakTime"); // Display the default slider value
+
+        document.getElementById("break-time-interval").innerHTML = localStorage.getItem("breakTime");
+        breakTime = localStorage.getItem("breakTime");
+
+        if (isLongBreak!=true) {
+            if (isWork!=true){
+                document.getElementById("progress-bar").innerHTML = breakTime + ":00";
+            document.getElementById("whatTime").innerHTML = "Break time";
+        }}
+    }
+    if (localStorage.getItem("work") != null) {
+
+        document.getElementById("change-work-minutes").value = localStorage.getItem("work").valueOf();
+        document.getElementById("work-time").innerHTML = localStorage.getItem("work");
+        document.getElementById("work-time-interval").innerHTML = localStorage.getItem("work");
+        work = localStorage.getItem("work");
+
+
+    }
+if(isWork == true){
+        time = work;
+    document.getElementById("progress-bar").style.background = "#ff9882";
+    document.getElementById("whatTime").innerHTML = "Work time";
     document.getElementById("progress-bar").innerHTML = work + ":00";
+    document.getElementById("change-work-minutes").value = work;
+    document.getElementById("work-time").innerHTML = work;
+    document.getElementById("work-time-interval").innerHTML = work;
+}if(isWork !=true){
+        time = breakTime;
+            document.getElementById("progress-bar").innerHTML = breakTime + ":00";
+            document.getElementById("whatTime").innerHTML = "Break time";
+            document.getElementById("progress-bar").style.background = "#62c462";
+            document.getElementById("change-break-minutes").value = breakTime;
+            document.getElementById("break-time").innerHTML = breakTime; // Display the default slider value
+
+            document.getElementById("break-time-interval").innerHTML = breakTime;
+        if(isLongBreak == true){
+            time = longBreak;
+            document.getElementById("whatTime").innerHTML = "It's time for longer break";
+            document.getElementById("progress-bar").style.background = "#bbb6e2";
+            document.getElementById("progress-bar").innerHTML = longBreak + ":00";
+            document.getElementById("change-longBreak-minutes").value = longBreak;
+            document.getElementById("longBreak-time").innerHTML = longBreak;
+            document.getElementById("longBreak-time-interval").innerHTML = longBreak;
+        }
+        }
+    }
 
 }
 
@@ -57,51 +167,68 @@ function refreshDisplay() {
 
 // Find the distance between now an the count down date
     distance = countDownDate - new Date().getTime();
-    localStorage.setItem("countDownDate", distance);
 
 
     // Time calculations for days, hours, minutes and seconds
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
     var newPercentage = ((minutes * 60 + seconds) / ((time * 60)) * 100);
     document.getElementById('progress-bar').style.width = newPercentage + "%";
     if (seconds < 10) {
         seconds = "0" + seconds;
     }
 
-    document.getElementById("progress-bar").innerHTML = minutes + ": " + seconds;
-    chrome.browserAction.setBadgeText({text:  minutes + ": " + seconds});
+    document.getElementById("progress-bar").innerHTML = minutes + ":" + seconds;
+    //chrome.browserAction.setBadgeText({text:  minutes + ": " + seconds});
     percent = document.getElementById('progress-bar').style.width;
     // If the count down is finished, write some text
 
     if (distance <= 0) {
-        document.getElementById("progress-bar").innerHTML = "00:00";
+        // document.getElementById("progress-bar").innerHTML = "00:00";
         // clearInterval(refreshDisplayTimeout);
         document.getElementById("progress-bar").style.color = "white";
-        if (isWork) {
+        if (isWork==true) {
 
             isWork = false;
+            localStorage.setItem("state", isWork);
             document.getElementById("progress-bar").style.background = "#62c462";
             time = breakTime;
-            if (countWork == 4) {
+            if (countWork == 3) {
+                audio3.play();
                 countWork = 0;
+
+                localStorage.setItem("countWork", countWork);
                 isLongBreak = true;
+                localStorage.setItem("stateBreak", isLongBreak);
                 document.getElementById("progress-bar").style.background = "#bbb6e2";
+                document.getElementById("progress-bar").innerHTML = longBreak + ":00";
+                document.getElementById('progress-bar').style.width = 100 + "%";
                 time = longBreak;
+                document.getElementById("whatTime").innerHTML = "It's time for long break";
 
             } else {
+                audio2.play();
                 ++countWork;
+                localStorage.setItem("countWork", countWork);
+                document.getElementById("whatTime").innerHTML = "Break time";
+                document.getElementById('progress-bar').style.width = 100 + "%";
+                document.getElementById("progress-bar").innerHTML = breakTime + ":00";
             }
         }
         else {
+            audio2.play();
             isWork = true;
+            document.getElementById("whatTime").innerHTML = "Work time";
+            localStorage.setItem("state", isWork);
             document.getElementById("progress-bar").style.background = "#ff9882";
+            document.getElementById('progress-bar').style.width = 100 + "%";
+            document.getElementById("progress-bar").innerHTML = work + ":00";
             time = work;
-            if (isLongBreak) {
+            if (isLongBreak==true) {
                 isLongBreak = false;
-                countWork=0;
-             }
+                localStorage.setItem("stateBreak", isLongBreak);
+                countWork = 0;
+            }
         }
 
         showInline("pause");
@@ -124,8 +251,8 @@ function refreshDisplay() {
             if (seconds < 10) {
                 seconds = "0" + seconds;
             }
-            document.getElementById("progress-bar").innerHTML = minutes + ": " + seconds;
-            chrome.browserAction.setBadgeText({text:  minutes + ": " + seconds});
+            document.getElementById("progress-bar").innerHTML = minutes + ":" + seconds;
+            //chrome.browserAction.setBadgeText({text:  minutes + ": " + seconds});
         }
     }
 
@@ -144,7 +271,7 @@ function refreshDisplay() {
 function resume() {
     hide("resume");
     hide("settings-change");
-    hide ("settings-change");
+    hide("settings-change");
     showInline("pause");
     countDownDate = countDownDate + c * 1000;
     c = 0;
@@ -154,11 +281,51 @@ function resume() {
 
 }
 
+function restart() {
+    hide("resume");
+    hide("pause");
+    hide("settings-change");
+    showInline("start");
+    hide("stop");
+    hide("restart");
+    localStorage.clear();
+    c = 0;
+    countWork = 0;
+    isWork = true;
+    document.getElementById("whatTime").innerHTML = "Work time";
+    isLongBreak = false;
+    document.getElementById("progress-bar").style.background = "#ff9882";
+    document.getElementById("progress-bar").innerHTML = work + ":00";
+
+
+    work = 25;
+    breakTime = 5;
+    longBreak = 20;
+    time = work;
+    document.getElementById("change-work-minutes").value = work;
+    document.getElementById("work-time").innerHTML = work;
+    document.getElementById("work-time-interval").innerHTML = work;
+
+
+    document.getElementById("change-break-minutes").value = breakTime;
+    document.getElementById("break-time").innerHTML = breakTime;
+    document.getElementById("break-time-interval").innerHTML = breakTime;
+
+
+    document.getElementById("change-longBreak-minutes").value = longBreak;
+    document.getElementById("longBreak-time").innerHTML = longBreak;
+    document.getElementById("longBreak-time-interval").innerHTML = longBreak;
+
+
+    clearTimeout(myTimer);
+
+
+}
 
 function stop() {
     hide("pause");
     hide("stop");
-    hide ("settings-change");
+    hide("settings-change");
     hide("settings-change");
     showInline("start");
     //stop
@@ -167,7 +334,7 @@ function stop() {
 
 function pause() {
     hide("pause");
-    hide ("settings-change");
+    hide("settings-change");
     showInline("resume")
     hide("settings-change");
     myTimer = setInterval(myCounter, 1000)
@@ -179,16 +346,12 @@ function myCounter() {
 }
 
 function setTimer() {
-    hide ("settings-change");
+    hide("settings-change");
     showInline("pause");
     showInline("stop");
     hide("start");
     hide("resume");
-    document.getElementById("progress-bar").style.background = "#ff9882";
-    time = work;
-    countWork=0;
-    isWork=true    ;
-    isLongBreak=false;
+
     // Get todays date and time
     var now = new Date().getTime();
     countDownDate = new Date().getTime();
@@ -203,7 +366,7 @@ function setTimer() {
     if (seconds < 10) {
         seconds = "0" + seconds;
     }
-    document.getElementById("progress-bar").innerHTML = minutes + ": " + seconds;
+    document.getElementById("progress-bar").innerHTML = minutes + ":" + seconds;
 
 
     refreshDisplay();
@@ -211,11 +374,11 @@ function setTimer() {
 
 }
 
-function settings(){
+function settings() {
 
-        show("settings-change");
-        hide("settings");
-        show("close-settings");
+    show("settings-change");
+    hide("settings");
+    showInline("close-settings");
     hide("pause");
     hide("stop");
     showInline("start");
@@ -227,12 +390,15 @@ function settings(){
     longBreakOutput.innerHTML = longBreakSlider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
-    longBreakSlider.oninput = function() {
+    longBreakSlider.oninput = function () {
         longBreakOutput.innerHTML = this.value;
         document.getElementById("longBreak-time-interval").innerHTML = this.value;
-        longBreak= this.value;
-        if(isLongBreak){
-            document.getElementById("progress-bar").innerHTML = longBreak + ":00" ;
+        longBreak = this.value;
+        localStorage.setItem("longBreak", longBreak);
+        showInline("restart");
+        if (isLongBreak==true) {
+            document.getElementById("progress-bar").innerHTML = longBreak + ":00";
+            time = longBreak;
         }
     }
 
@@ -241,13 +407,18 @@ function settings(){
     breakOutput.innerHTML = breakSlider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
-    breakSlider.oninput = function() {
+    breakSlider.oninput = function () {
         breakOutput.innerHTML = this.value;
         document.getElementById("break-time-interval").innerHTML = this.value;
         breakTime = this.value;
-        if(!isLongBreak){
-            if(!isWork)
-            document.getElementById("progress-bar").innerHTML = breakTime + ":00" ;
+        localStorage.setItem("breakTime", breakTime);
+        showInline("restart");
+        if (isLongBreak!=true) {
+            if (isWork!=true) {
+time=breakTime;
+                document.getElementById("progress-bar").innerHTML = breakTime + ":00";
+                document.getElementById("whatTime").innerHTML = "Break time";
+            }
         }
     }
 
@@ -256,20 +427,24 @@ function settings(){
     workOutput.innerHTML = workSlider.value; // Display the default slider value
 
 // Update the current slider value (each time you drag the slider handle)
-    workSlider.oninput = function() {
+    workSlider.oninput = function () {
         workOutput.innerHTML = this.value;
-        document.getElementById("work-time-interval").innerHTML= this.value;
-        work=this.value;
-        if(isWork)
-            document.getElementById("progress-bar").innerHTML = work + ":00" ;
+        document.getElementById("work-time-interval").innerHTML = this.value;
+        work = this.value;
+        localStorage.setItem("work", work);
+        showInline("restart");
+        if (isWork==true) {
+            time=work;
+            document.getElementById("progress-bar").innerHTML = work + ":00";
+            document.getElementById("whatTime").innerHTML = "Work time";
+        }
     }
 }
 
-function  csettings() {
-    hide ("settings-change");
-    show("settings");
+function csettings() {
+    hide("settings-change");
+    showInline("settings");
     hide("close-settings");
-
 
 
 }
@@ -282,10 +457,10 @@ function sound(src) {
     this.sound.setAttribute("controls", "none");
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
-    this.play = function(){
+    this.play = function () {
         this.sound.play();
     }
-    this.stop = function(){
+    this.stop = function () {
         this.sound.pause();
     }
 }
