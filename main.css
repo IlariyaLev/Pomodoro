@@ -66,6 +66,12 @@ img{
     }
 }
 
+#notification{
+    border: #ff9882 dashed 2px;
+    padding: 3px;
+    text-align: center;
+}
+
 .timer-block{
     width: 100%;
     min-height: 30px;
@@ -161,7 +167,13 @@ img{
     text-align: center;
     margin: auto;
 }
-
+#save-notification{
+    color: #fff;
+    background-color: #bbb6e2;
+    border-color: #9763e2;
+    text-align: center;
+    margin: auto;
+}
 #resume{
     color: #fff;
     background-color: #c6ecfd;

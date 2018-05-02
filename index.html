@@ -44,10 +44,10 @@
 
         <div class="buttons" style="display: block">
             <button id="stop" class=" btn btn-danger" style="display: none">Stop</button>
-            <button id="start" class=" btn btn-success" style="display: inline" >Start</button>
+            <button id="start" class=" btn btn-success" style="display: inline">Start</button>
             <button id="pause" class=" btn btn-warning" style="display: none">Pause</button>
-            <button id="resume" class=" btn btn-success" style="display: none" >Resume</button>
-            <button id="restart" class=" btn btn-success" style="display: inline" >Restart</button>
+            <button id="resume" class=" btn btn-success" style="display: none">Resume</button>
+            <button id="restart" class=" btn btn-success" style="display: inline">Restart</button>
         </div>
         <div class="intervals">
             <div class="work">
@@ -66,9 +66,9 @@
                 <span class="minutes-longBreak">min</span>
             </div>
         </div>
-        <button id="settings" class= btn">Settings</button>
+        <button id="settings" class=btn">Settings</button>
 
-        <button id="close-settings" class= btn" style="display: none">Settings</button>
+        <button id="close-settings" class=btn" style="display: none">Settings</button>
         <div id="settings-change" style="display: none">
             <div class="settings-box">
                 <span class="work-text" style="display: inline">Work:</span>
@@ -89,7 +89,16 @@
                 <span class="minutes-longBreak">min</span>
             </div>
             <input type="range" id="change-longBreak-minutes" class=" range" value="1" min="1" max="30">
+            <div id="notification">
+                <span class="end-text">Notify with:</span>
+                <form>
+                    <input type="radio" name="end" id="non"> nothing
+                    <input type="radio" name="end" id="sound" checked> Sound
 
+
+                </form>
+                <button id="save-notification" class=btn">Save notification settings</button>
+            </div>
         </div>
     </div>
     <div class="footer">
@@ -98,7 +107,8 @@
 </div>
 
 
-<script type="text/javascript"  src="main.js"> </script>
-<script type="text/javascript"  src="background.js"> </script>
+
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="background.js"></script>
 </body>
 </html>
